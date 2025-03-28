@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mujeres que dejaron huella en Huelva</title>
+
+    <!-- Incluir la hoja de estilo de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Incluir la fuente "Lobster" desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <!-- Incluir la fuente "Roboto Slab" desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos para el contenedor del mapa y el título -->
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+
+        /* Estilo para el título con una fuente más bonita y color morado */
+        h1 {
+            font-family: 'Lobster', cursive;
+            font-size: 3em;
+            color: #8e44ad; /* Color morado para el título */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para la leyenda */
+        #leyenda {
+            position: fixed; /* Fijado para que se quede en la pantalla */
+            top: 100px; /* Ajustado para moverla un poco más abajo */
+            left: 20px; /* Alineada a la izquierda */
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            font-family: 'Roboto Slab', serif;
+            z-index: 1000;
+            width: 300px; /* Ancho de la leyenda */
+            height: auto;  /* Asegura que la leyenda crezca hacia abajo */
+        }
+
+        /* Estilo para el marcador circular con números */
+        .leaflet-marker-icon {
+            border-radius: 50%;
+            background-color: #8e44ad;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border: 2px solid white;
+        }
+
+        /* Estilo para las imágenes dentro de los popups */
+        .popup-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-image {
+            width: 100px;
+            height: auto;
+            margin-top: 10px;
+        }
+
+        .popup-text {
+            max-width: 300px;
+            text-align: justify;
+        }
+
+        .popup-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* Estilo para la línea de puntitos */
+        .leaflet-polyline {
+            stroke: #808080; /* Gris */
+            stroke-width: 4;
+            stroke-dasharray: 6, 6;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ruta Turística "Mujeres que dejaron huella en Huelva"</h1>
+    <div id="map"></div>
+
+    <!-- Incluir la biblioteca de Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        // Crear el mapa centrado en Huelva
+        var map = L.map('map').setView([37.2617, -6.9447], 13);  // Coordenadas de Huelva
+
+        // Cargar el mapa desde OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Función para crear un marcador con texto e imagen
+        function crearMarcador(lat, lon, numero, titulo, texto, imagen1, imagen2) {
+            var icono = L.divIcon({
+                className: 'leaflet-marker-icon',
+                html: numero,
+                iconSize: [50, 50],
+                iconAnchor: [25, 25],
+                popupAnchor: [0, -25]
+            });
+
+            var marcador = L.marker([lat, lon], { icon: icono }).addTo(map);
+
+            var contenido = "<div class='popup-title'>" + titulo + "</div>";
+            contenido += "<div class='popup-content'>";
+
+            if (imagen1) {
+                contenido += "<img src='" + imagen1 + "' class='popup-image'>";
+            }
+
+            if (imagen2) {
+                contenido += "<img src='" + imagen2 + "' class='popup-image'>";
+            }
+
+            contenido += "<p class='popup-text'>" + texto + "</p></div>";
+
+            marcador.on('mouseover', function() {
+                marcador.bindPopup(contenido).openPopup();
+            });
+
+            marcador.on('mouseout', function() {
+                marcador.closePopup();
+            });
+        }
+
+        // Añadir todos los recursos
+        crearMarcador(37.25436289242377, -6.946322216413956, "1", "Placa conmemorativa de Gertrude Vanderbilt Whitney", "Gertrude Vanderbilt Whitney (1875-1942), escultora estadounidense e hija adoptiva de Huelva, diseñó en 1929 el Monumento a Colón, situado en la Punta del Sebo. Fundó varias instituciones, incluyendo el Whitney Museum of American Art, un referente cultural en Nueva York . Recomendamos: Friedman, Bernard Harper (1978). Gertrude Vanderbilt Whitney: a biography. Doubleday Books. Sugrañes Gómez, Eduardo J.", "Imagenes/1.png", "");
+        crearMarcador(37.25509841653389, -6.943597411436203, "2", "Esperanza Abot Barge (Museo de Huelva)", "Esperanza Abot Barge (1887–1961), hija de padre francés y madre argelina, nació en Huelva. En 1909, fue la única pintora onubense que expuso tres obras en el Royal Albert Hall de Londres. Por desgracia su trabajo pasó desapercibido en Huelva.", "Imagenes/Esperanza.png", "");
+        crearMarcador(37.25519841653389, -6.943797411436203, "2", "Ellen Mary Whishaw (Museo de Huelva)", "Ellen Mary Whishaw (1857-1937), junto a su esposo, fundó el Museum of Andalusian Pottery and Lace y la Escuela de Arqueología de Sevilla en 1912. Tras enviudar en 1914, dirigió la Escuela, renombrándola Escuela Anglo-Hispano-Americana de Arqueología. Fue nombrada miembro de varias instituciones y, tras su muerte, su museo fue cerrado y sus colecciones trasladadas al Museo de Huelva, pero actualmente no hay reseña de ella en dicho museo. Recomendamos: Whishaw, Ellen, Méndez Naylor, Gladys (trad.) (2013). Mi año español. Diputación de Huelva. Acosta Ferrero, Juan María (2003). Elena Whishaw. Entre la leyenda y la realidad. Diputación de Huelva.", "Imagenes/Ellen.png", "");
+        crearMarcador(37.255189814623165, -6.944005693309095, "3", "María Luisa Muñoz de Vargas (La Casona)", "María Luisa Muñoz de Vargas (1898-1975), escritora onubense, destacó en diversos géneros literarios como cuentos, novelas, teatro y poesía, utilizando pseudónimos como L. Muñoz de Vargas y Félix de Bulnes. Entre sus obras destacadas se encuentran Herrumbre en el Alma (1925), Bosque sin salida (1934) y Cuentos selectos (1951). Recomendamos: Colchero, Esther (2017). Obra poética de María Luisa Muñoz de Vargas. Versus.", "Imagenes/3.png", "");
+        crearMarcador(37.25472358523883, -6.946532082013847, "4", "Mary Francis Colt (Archivo Municipal)", "Mary Francis Colt (Fernanda Cano Caparrós), nacida en Huelva en 1911, fue una prolífica escritora que usó este seudónimo para publicar principalmente novelas policíacas y de intriga. Aunque se pensaba que era inglesa debido a sus 'traducciones', en realidad, escribía bajo ese nombre para ocultar su identidad. Fue especialmente conocida en los años 60 por sus obras de misterio y romance.", "Imagenes/4.png", "");
+        crearMarcador(37.25464993970281, -6.948978434606546, "5", "Sor Ángela de la Cruz", "Sor Ángela de la Cruz (1846-1932), canonizada santa en 2003, fundó la Compañía Hermanas de la Cruz y se dedicó a atender a personas desamparadas, pobres y enfermos en toda Andalucía. En Huelva, fundó un convento con una escuela para enseñar a las niñas y prepararlas para el Certificado de Estudios Primarios. Su labor reflejó el auge de las congregaciones religiosas femeninas en el siglo XIX, ofreciendo nuevas oportunidades sociales para la mujer. Recomendamos: Iglesias, Gervasio (2024). Ángela. El Paseo Editorial.", "Imagenes/5.png", "");
+        crearMarcador(37.2589361234376, -6.95381671335857, "6", "Josefa Jiménez Vázquez (Palacio Moras Claro)", "Josefa Jiménez Vázquez (1883-1955), esposa de Antonio Mora Claros, fue nombrada Condesa de Mora Claros en 1927 por su amor y dedicación a los desamparados. Presidió la Junta de Damas de la Beneficencia y gestionó centros asistenciales como La Gota de Leche, que cuidaba a mujeres gestantes y recién nacidos. Su labor se centró en la atención social y el apoyo a las personas mas necesitadas.", "Imagenes/6.png", "");
+        // Añadir recursos 7 y 8 con las coordenadas correctas
+        crearMarcador(37.262112624669875, -6.949246229071766, "7", "Ivonne Claire Cazenave", "Ivonne Claire Cazenave (1909-1974) fue directora de la Escuela Francesa de Huelva desde 1936 hasta su fallecimiento. La escuela, fundada en 1917 por la Société Française de Bienfaisance, seguía los programas oficiales de las escuelas primarias francesas y fue mixta desde su inicio. Cazenave llegó a Huelva en 1926 como maestra de francés y contribuyó a la modernización educativa en un contexto de alta tasa de analfabetismo femenino.", "Imagenes/7.png", "");
+        crearMarcador(37.26346284266529, -6.94859063196495, "8", "Antonia Arrobas y Pérez (Instituto la Rábida)", "Antonia Arrobas y Pérez (1858-1896), una mujer extremeña, solicitó en aunque inicialmente fue rechazada. Su petición inspiró a otras mujeres, lo que llevó a la Dirección General de Instrucción Pública a extender la autorización para casos similares. Su acción marcó un precedente en los cambios progresivos del sistema educativo español.", "Imagenes/8.png", "");
+
+        // Agregar una línea de puntos entre los marcadores
+        var puntos = [
+            [37.25436289242377, -6.946322216413956],
+            [37.25509841653389, -6.943597411436203],
+            [37.25519841653389, -6.943797411436203],
+            [37.255189814623165, -6.944005693309095],
+            [37.25472358523883, -6.946532082013847],
+            [37.25464993970281, -6.948978434606546],
+            [37.2589361234376, -6.95381671335857],
+            [37.262112624669875, -6.949246229071766],  // Coordenada del recurso 7
+            [37.26346284266529, -6.94859063196495]   // Coordenada del recurso 8
+        ];
+
+        var polyline = L.polyline(puntos, { color: '#808080', dashArray: '5,10' }).addTo(map);
+
+    </script>
+
+    <!-- Leyenda al lado del mapa -->
+    <div id="leyenda">
+        <h3>DESCRIPCIÓN DE LA RUTA:</h3>
+        <p><strong>Edad:</strong> A partir de 12 años, máximo 25 personas por grupo</p>
+        <p><strong>Duración:</strong> 2 horas (a pie)</p>
+        <p><strong>Guía:</strong> Español</p>
+        <p><strong>Inicio:</strong> Avenida Escultora Miss Whitney, 1</p>
+        <p><strong>Fin:</strong> Manuel Siurot, 9</p>
+        <p><strong>Accesibilidad:</strong> Accesible para sillas de ruedas</p>
+        <h4>Itinerario:</h4>
+        <ol>
+            <li>Placa conmemorativa en Avenida Escultora Miss Whitney</li>
+            <li>Museo de Huelva</li>
+            <li>La Casona</li>
+            <li>Pabellón de Levante de la Casa Colón</li>
+            <li>Convento Hermanas de la Cruz</li>
+            <li>Palacio Mora Claros</li>
+            <li>Busto Ivonne Cazenave</li>
+            <li>Instituto Rábida</li>
+        </ol>
+        <p><strong>Para más información:</strong> Concejalía de Turismo del Ayuntamiento de Huelva</p>
+    </div>
+</body>
+</html>
